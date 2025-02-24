@@ -2,7 +2,7 @@
 # docker build -t automax .
 
 # run with
-# docker run -it -p 8000:8000 -v ./data:/data automax
+# docker run -it -p 8000:8000 -v ./data:/app/data automax
 
 # Python version should match .python-version
 FROM python:3.12

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import requests
 
 from .ikea import get_devices, filter_attributes, NOT_IMPLEMENTED
@@ -20,7 +20,7 @@ def log_event(db: Database, now: datetime, event: str, device: str, data: dict):
 
 
 def log_all_devices():
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
     db = Database(month=now.month, year=now.year)
     try:
         for device in get_devices():
