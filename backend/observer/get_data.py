@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 from .ikea import filter_attributes, NOT_IMPLEMENTED
 from .database import Database
-from .logger import console_log
+from .logger import LOG
 from .send_mail import send_mail
 
 
@@ -39,7 +39,7 @@ def log_event(db: Database, now: datetime, event: str, device_id: str, data: dic
 
 
 def log_error(db: Database, now: datetime, event: str, err: Exception):
-    console_log(f"{event}: {err}")
+    LOG.error(f"{event}: {err}")
     log_event(
         db=db,
         now=now,
