@@ -1,9 +1,3 @@
-import dirigera
-from dirigera.hub.abstract_smart_home_hub import AbstractSmartHomeHub
-from .config import TOKEN, IP
-
-HUB = dirigera.Hub(token=TOKEN, ip_address=IP)
-
 # White list of device attributes to be logged
 ATTRIBUTES = {
     "environmentSensor": ["currentTemperature", "currentRH", "currentPM25", "vocIndex"],
@@ -13,10 +7,6 @@ ATTRIBUTES = {
 
 # Don't log these devices
 NOT_IMPLEMENTED = ["gateway"]
-
-
-def get_devices(hub: AbstractSmartHomeHub = HUB) -> list[dict]:
-    return HUB.get(route="/devices")
 
 
 def filter_attributes(type: str, attributes: dict) -> dict:

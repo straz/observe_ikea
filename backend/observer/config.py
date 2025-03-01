@@ -1,12 +1,17 @@
 # Enter your local configuration data here
 
-IP = "198.168.x.x"
+from .home import Home
 
-TOKEN = """eyJhbG...zzzz"""
+HOMES = [
+    Home(
+        ip="198.168.x.x",
+        token="""eyJhbG...zzzz""",
+    )
+]
 
-SENSORS = {
-    "kitchen_motion": "d1..",
-    "kitchen_light": "d2..",
-    "kitchen_temp": "d3..",
-    "basement_temp": "d4..",
+
+SENDMAIL_CONFIG = {
+    "myself": "yourname@example.com",
+    "host": "smtp-relay.example.com",
+    "port": 587,
 }

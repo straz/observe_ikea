@@ -28,6 +28,8 @@ CREATE = """CREATE TABLE IF NOT EXISTS log(
       device TEXT,
       data TEXT)"""
 
+CREATE_INDEX = "CREATE INDEX timestamp_idx on log(timestamp)"
+
 
 class Database:
     """
@@ -43,6 +45,11 @@ class Database:
         file = DATADIR / f"data-{self.year}-{self.month:02}.db"
         self.conn = sqlite3.connect(file)
         self.execute(CREATE)
+        try:
+            self.execute(CREATE_INDEX)
+        except sqlite3.OperationalError:
+            # index already exists
+            pass
         self.conn.commit()
         return self.conn
 

@@ -1,6 +1,17 @@
 [project]
-name = "gather"
+name = "observe_ikea"
 version = "0.1.0"
 requires-python = ">=3.12"
 description = "Gathers sensor data from an IKEA DIRIGERA hub"
-dependencies = ["fastapi", "uvicorn", "dirigera"]
+dependencies = [
+  "dirigera",
+  "fastapi",
+  "pydantic",
+  "types-requests",
+  "uvicorn",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "mypy",
+]

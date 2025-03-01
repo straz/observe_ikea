@@ -6,8 +6,7 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
 
-from observer.get_data import log_all_devices
-from observer.read_db import query_day, query_devices
+from observer import Home, query_day, query_devices
 
 app = FastAPI()
 LOGFILE = os.getenv("LOGFILE")
@@ -22,9 +21,10 @@ async def root() -> dict:
 async def trigger_observation() -> dict:
     """
     We receive a trigger once every minute.
-    This runs log_all_devices => observe the data and record it.
+    This runs log_all_devices on each Home,
+    which will observe the data and record it.
     """
-    log_all_devices()
+    Home.log_all()
     return {"message": "Observation triggered."}
 
 

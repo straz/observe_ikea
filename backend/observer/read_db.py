@@ -1,3 +1,8 @@
+"""
+Read data from the local database
+in response to web queries.
+"""
+
 import json
 from datetime import datetime
 from .database import Database
