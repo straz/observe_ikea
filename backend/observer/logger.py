@@ -7,19 +7,15 @@ from .config import LOCAL_TZ
 
 class TimeZoneFormatter(logging.Formatter):
     def __init__(self, fmt=None, datefmt=None, timezone=LOCAL_TZ):
-        super().__init__(fmt, datefmt)
+        format_str = "[%(asctime)s] %(levelname)s - %(message)s"
+        super().__init__(fmt=format_str, datefmt=None)
         self.timezone = ZoneInfo(timezone)
         self.tz_name = self.timezone.tzname(datetime.now())  # string like 'EST'
 
-    def converter(self, timestamp):
-        dt = datetime.datetime.fromtimestamp(timestamp)
-        return dt.replace().astimezone(self.timezone)
-
-    def format(self, record: logging.LogRecord):
-        date_str = f"%Y-%m-%d %H:%M {self.tz_name}"
-        format_str = "[%(asctime)s] %(levelname)s - %(message)s"
-        formatter = logging.Formatter(fmt=format_str, datefmt=date_str)
-        return formatter.format(record)
+    def formatTime(self, record: logging.LogRecord, datefmt=None) -> str:
+        dt = datetime.fromtimestamp(record.created)
+        local_dt = dt.replace().astimezone(self.timezone)
+        return local_dt.strftime(f"%Y-%m-%d %H:%M {self.tz_name}")
 
 
 LOG = logging.getLogger(__name__)
