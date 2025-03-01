@@ -4,7 +4,7 @@ from contextlib import closing
 from datetime import datetime
 
 from .path import DATADIR
-from .logger import log
+from .logger import console_log
 
 
 def adapt_datetime_iso(val):
@@ -73,7 +73,7 @@ class Database:
         last_query = "SELECT data FROM log WHERE device = ? ORDER BY id DESC LIMIT 1"
         last_entry = self.execute_fetchone(last_query, (device,))
         if last_entry and last_entry[0] == json.dumps(data):
-            log(f"skipping: {event} {data}")
+            console_log(f"skipping: {event} {data}")
             return
         insert = "INSERT INTO log(timestamp, event, device, data) VALUES(?, ?, ?, ?);"
         self.execute(insert, (timestamp, event, device, json.dumps(data)))

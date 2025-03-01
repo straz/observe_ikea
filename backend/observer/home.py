@@ -2,13 +2,14 @@ from __future__ import annotations
 from typing import Any, ClassVar
 from pydantic import BaseModel, ConfigDict, Field, computed_field
 from functools import cached_property
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 import requests
 
 import dirigera
 from dirigera.hub.abstract_smart_home_hub import AbstractSmartHomeHub
 from .database import Database
 from .get_data import log_device, log_error
+from .config import HOMES
 
 
 class Home(BaseModel):
@@ -20,7 +21,7 @@ class Home(BaseModel):
     token: str = Field(exclude=True, repr=False)
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    @computed_field # type: ignore[misc]
+    @computed_field  # type: ignore[misc]
     # see https://docs.pydantic.dev/2.0/usage/computed_fields/
     @cached_property
     def hub(self) -> AbstractSmartHomeHub:
@@ -34,6 +35,11 @@ class Home(BaseModel):
 
     def get_sensors(self) -> dict[str, str]:
         return {device_name(d): d["id"] for d in self.get_devices()}
+
+    @classmethod
+    def init_all(cls):
+        for home in HOMES:
+            cls(**home)
 
     @classmethod
     def log_all(cls):

@@ -7,9 +7,6 @@
 # Python version should match .python-version
 FROM python:3.12
 
-ENV LOGFILE=/var/log/gather.log
-RUN touch $LOGFILE
-
 RUN apt update && apt -y upgrade
 WORKDIR /app
 

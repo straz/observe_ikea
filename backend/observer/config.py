@@ -1,17 +1,17 @@
 # Enter your local configuration data here
 
-from .home import Home
+LOCAL_TZ = "America/New_York"
+
+# Local path inside your Dockerfile
+LOGFILE = "/var/log/gather.log"
 
 HOMES = [
-    Home(
-        ip="198.168.x.x",
-        token="""eyJhbG...zzzz""",
-    )
+    {
+        "ip": "198.168.x.x",
+        "token": "eyJhbG...zzzz",
+    }
 ]
 
-
-SENDMAIL_CONFIG = {
-    "myself": "yourname@example.com",
-    "host": "smtp-relay.example.com",
-    "port": 587,
-}
+SMTP_USER = "yourname@example.com"
+SMTP_HOST = "smtp-relay.example.com"
+SMTP_PORT = 587

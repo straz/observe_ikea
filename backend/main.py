@@ -8,8 +8,13 @@ from fastapi.responses import PlainTextResponse
 
 from observer import Home, query_day, query_devices
 
-app = FastAPI()
 LOGFILE = os.getenv("LOGFILE")
+
+
+app = FastAPI()
+
+# Create Home instances from config.py
+Home.init_all()
 
 
 @app.get("/")

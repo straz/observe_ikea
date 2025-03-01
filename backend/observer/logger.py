@@ -1,11 +1,15 @@
-from datetime import datetime
-import os
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
-# defined in Dockerfile
-LOGFILE = os.getenv("LOGFILE")
+from .config import LOCAL_TZ, LOGFILE
 
 
-def log(msg):
-    now = datetime.now().isoformat()
+def console_log(msg):
+    now_utc = datetime.now(timezone.utc)
+    now_local = now_utc.astimezone(ZoneInfo(LOCAL_TZ))
+    tz = now_local.tzname()
+    tstamp = now_local.strftime(f"%Y-%m-%dT%H:%M {tz}")
     with open(LOGFILE, "a") as fp:
-        fp.write(f"\n[{now}]: {msg}")
+        message = f"\n[{tstamp}]: {msg}"
+        fp.write(message)
+        print(message)

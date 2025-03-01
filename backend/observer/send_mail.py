@@ -10,13 +10,13 @@ https://support.google.com/a/answer/176600?hl=en&fl=1&sjid=18241002030510003695-
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from .config import SENDMAIL_CONFIG
+from .config import SMTP_USER, SMTP_HOST, SMTP_PORT
 
 
 def make_msg(message: str, subject: str):
     msg = MIMEMultipart()
-    msg["From"] = SENDMAIL_CONFIG["myself"]
-    msg["To"] = SENDMAIL_CONFIG["myself"]
+    msg["From"] = SMTP_USER
+    msg["To"] = SMTP_USER
     msg["Subject"] = subject
     msg.attach(MIMEText(message, "plain"))  # or 'html'
     return msg
@@ -24,7 +24,7 @@ def make_msg(message: str, subject: str):
 
 def send_mail(message: str, subject: str):
     try:
-        with smtplib.SMTP(SENDMAIL_CONFIG["host"], SENDMAIL_CONFIG["port"]) as server:
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
             server.starttls()
             server.send_message(make_msg(message, subject))
     except Exception as e:

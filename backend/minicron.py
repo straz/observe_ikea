@@ -1,15 +1,8 @@
-# This script runs forever, pinging "http://localhost:/trigger" every minute
-
-# /// script
-# requires-python = ">=3.12"
-# dependencies = ['requests']
-# ///
-
 from datetime import datetime
 from typing import Callable
 import time
 import requests
-from observer.logger import log
+from observer.logger import console_log
 
 
 def send_trigger():
@@ -17,13 +10,13 @@ def send_trigger():
     try:
         requests.get(url)
     except requests.exceptions.ConnectionError as err:
-        log(f"trigger failed: {err}")
+        console_log(f"trigger failed: {err}")
 
 
 def every_minute(fcn: Callable):
     while True:
         now = datetime.now()
-        log("Observation triggered")
+        console_log("Observation triggered")
         fcn()
         sleep_time = 60 - now.second
         time.sleep(sleep_time)

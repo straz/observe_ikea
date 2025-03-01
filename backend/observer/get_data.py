@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 from .ikea import filter_attributes, NOT_IMPLEMENTED
 from .database import Database
-from .logger import log
+from .logger import console_log
 from .send_mail import send_mail
 
 
@@ -17,9 +17,8 @@ def log_device(db: Database, now: datetime, device: dict):
     if event in NOT_IMPLEMENTED:
         return
     data = filter_attributes(event, device["attributes"])
-    if event == "motionSensor" and data["attributes"]["isDetected"] is True:
+    if event == "motionSensor" and data["isDetected"] is True:
         notify_if_new(db=db, now=now)
-
     log_event(db=db, now=now, event=event, device_id=device_id, data=data)
 
 
@@ -40,7 +39,7 @@ def log_event(db: Database, now: datetime, event: str, device_id: str, data: dic
 
 
 def log_error(db: Database, now: datetime, event: str, err: Exception):
-    log(f"{event}: {err}")
+    console_log(f"{event}: {err}")
     log_event(
         db=db,
         now=now,
