@@ -56,6 +56,11 @@ async def list_devices(year: int, month: int):
     return query_devices(year=year, month=month)
 
 
+@app.get("/sensors")
+async def all_sensors():
+    return Home.all_current_sensors()
+
+
 @app.get("/data/{device_id}/day/{year}/{month}/{day}")
 async def get_day_data(device_id: str, year: int, month: int, day: int):
     return query_day(device_id=device_id, year=year, month=month, day=day)

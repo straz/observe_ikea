@@ -34,12 +34,20 @@ class Home(BaseModel):
         return self.hub.get(route="/devices")
 
     def get_sensors(self) -> dict[str, str]:
-        return {device_name(d): d["id"] for d in self.get_devices()}
+        return {
+            device_name(d): d["id"]
+            for d in self.get_devices()
+            if d["deviceType"] != "gateway"
+        }
 
     @classmethod
     def init_all(cls):
         for home in HOMES:
             cls(**home)
+
+    @classmethod
+    def all_current_sensors(cls) -> dict:
+        return {h.name: h.get_sensors() for h in cls._homes}
 
     @classmethod
     def log_all(cls):
