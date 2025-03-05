@@ -87,6 +87,23 @@ export function showVOC(env_data){
   )
 }
 
+export function showPM25(env_data){
+  const data = env_data.map(d => ({
+    timestamp: new Date(d.timestamp),
+    PM25: d.currentPM25
+  }));
+
+  return  Plot.plot(
+    {x: {type: "time"},
+     y: {label: "PM 25"},
+     marginBottom: 100,
+     marks: [
+       Plot.line(data, { x: "timestamp", y: "PM25", stroke: "purple" })
+     ]
+    }
+  )
+}
+
 
 
 export function showLight(env_data){

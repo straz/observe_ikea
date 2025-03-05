@@ -9,7 +9,7 @@ footer: ''
 ```js
 import {css_link} from "../../components/bootstrap.js";
 import {zpad, makeDeviceUrl, toRawHtml, toButton, findDeviceName, showTemp,
-        showHumidity, showVOC, showPresence, showLight} from "../../components/show_data.js";
+        showHumidity, showVOC, showPM25, showPresence, showLight} from "../../components/show_data.js";
 
 display(css_link);
 const devices = [
@@ -76,6 +76,7 @@ if (["kitchen", "basement"].indexOf(deviceName) > -1){
 	display(showTemp(env_sensor));
 	display(showHumidity(env_sensor));
 	display(showVOC(env_sensor));
+	display(showPM25(env_sensor));
 } else if (deviceName == "motion"){
 	const widget =showPresence(env_sensor, {year, month, day});
 	display(widget[0]);
