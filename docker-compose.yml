@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: ./web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - internal
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend/data:/app/data
+    networks:
+      - internal
+    expose:
+      - "8000"
+
+networks:
+  internal:
+    driver: bridge
