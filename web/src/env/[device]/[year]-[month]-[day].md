@@ -7,8 +7,6 @@ footer: ''
 ---
 
 ```js
-import {touchButton} from "../../components/reload.js";
-
 import {css_link} from "../../components/bootstrap.js";
 import {zpad, makeDeviceUrl, toRawHtml, toButton, findDeviceName, showTemp,
         showHumidity, showVOC, showPresence, showLight} from "../../components/show_data.js";
@@ -25,8 +23,6 @@ const deviceId = observable.params.device;
 const deviceName = findDeviceName(deviceId, devices);
 
 display(html({raw: [`<h1>${deviceName}</h1>`]}))
-
-display(touchButton());
 
 
 const year = observable.params.year;
