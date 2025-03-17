@@ -1,57 +1,23 @@
-import * as Plot from "npm:@observablehq/plot";
-import {html} from "npm:htl";
+import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.7.1/+esm'
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 
-export function zpad(n){
-  return String(n).padStart(2, "0")
+// date is {year: year, month: month, day: day}
+export function showChart(params, env_data){
+  switch(params.type){
+  case 'environmentSensor':
+    return $('<div>').append(
+      showTemp(env_data),
+      showVOC(env_data),
+      showPM25(env_data)
+    );
+  case 'lightSensor':
+    return showLight(env_data);
+  case 'motionSensor':
+    return showPresence(env_data, params);    
+  }
 }
 
-export function findDeviceName(device, devices){
-  let deviceName;
-  devices.forEach((spec)=> {
-    if (spec[1] == device) {
-      deviceName = spec[0];
-    }
-  })
-  return deviceName;
-}
-
-export function toRawHtml(string){
-  return html({raw: [string]})
-}
-
-export function toButton(string){
-  return html({raw: [`<button class="btn btn-outline-secondary btn-sm  me-3">${string}</button>`]})
-}
-
-export function makeDeviceUrl(spec, d, relPath){
-  // spec:  [name:string, id:string]
-  // d:  {year, month, day}
-  const name = spec[0];
-  const id = spec[1];
-  const ref=`${relPath}/${id}/${d.year}-${d.month}-${d.day}`;
-  return `<A href="${ref}">${name}</A><br/>`;
-}
-
-export function showHumidity(env_data){
-  const data = env_data.map(d => ({
-    timestamp: new Date(d.timestamp),
-    humidity: d.currentRH
-  }));
-
-  return Plot.plot(
-    {x: {type: "time", label: "timestamp"},
-     y: {axis: "left", label: "Relative humidity %", color: "green", domain: [15, 60]},
-     marginBottom: 100,
-     marks: [
-       Plot.line(data, { x: "timestamp", y: "humidity",
-   			 stroke: "green", label: "Humidity" }),
-     ]
-    }
-  )
-}
-
-
-export function showTemp(env_data){
+function showTemp(env_data){
   function toF(C){return (C * 9/5) + 32; }
 
   const data = env_data.map(d => ({
@@ -70,7 +36,7 @@ export function showTemp(env_data){
   )
 }
 
-export function showVOC(env_data){
+function showVOC(env_data){
   const data = env_data.map(d => ({
     timestamp: new Date(d.timestamp),
     vocIndex: d.vocIndex
@@ -87,7 +53,7 @@ export function showVOC(env_data){
   )
 }
 
-export function showPM25(env_data){
+function showPM25(env_data){
   const data = env_data.map(d => ({
     timestamp: new Date(d.timestamp),
     PM25: d.currentPM25
@@ -106,7 +72,7 @@ export function showPM25(env_data){
 
 
 
-export function showLight(env_data){
+function showLight(env_data){
   const data = env_data.map(d => ({
     timestamp: new Date(d.timestamp),
     light: d.illuminance
@@ -124,10 +90,10 @@ export function showLight(env_data){
 }
 
 
-export function showPresence(env_data, date){
+function showPresence(env_data, p){
 
-  const start = new Date(`${date.year}-${zpad(date.month)}-${zpad(date.day)}T00:00`)
-  const end = new Date(`${date.year}-${zpad(date.month)}-${zpad(date.day)}T23:59`)
+  const start = new Date(`${p.year}-${zpad(p.month)}-${zpad(p.day)}T00:00`)
+  const end = new Date(`${p.year}-${zpad(p.month)}-${zpad(p.day)}T23:59`)
   
   const data = env_data
 	.filter(d => d.isDetected)
@@ -137,7 +103,7 @@ export function showPresence(env_data, date){
 	}));
   if (env_data.length == 0){
     console.error('nope')
-    return ['No data', {raw: [`No presence data for ${date.year}-${date.month}-${date.day}`]}];
+    return ['No data', {raw: [`No presence data for ${p.year}-${p.month}-${p.day}`]}];
   }
   
   const battery = `Battery: ${env_data[0].batteryPercentage}%`
@@ -155,4 +121,8 @@ export function showPresence(env_data, date){
     ),
     {raw: [ `<p>${battery}</p>` ]}
   ]
+}
+
+function zpad(n){
+  return String(n).padStart(2, "0")
 }

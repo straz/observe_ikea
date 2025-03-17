@@ -33,9 +33,9 @@ class Home(BaseModel):
     def get_devices(self) -> list[dict]:
         return self.hub.get(route="/devices")
 
-    def get_sensors(self) -> dict[str, str]:
+    def get_sensors(self) -> dict[str, dict[str, str]]:
         return {
-            device_name(d): d["id"]
+            d["id"]: {'name': device_name(d), 'type': d["deviceType"]}
             for d in self.get_devices()
             if d["deviceType"] != "gateway"
         }

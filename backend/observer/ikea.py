@@ -17,4 +17,4 @@ def filter_attributes(type: str, attributes: dict) -> dict:
     if type not in ATTRIBUTES:
         raise ValueError(f"Unknown type: {type}")
     whitelist = ATTRIBUTES[type]
-    return {k: attributes[k] for k in whitelist}
+    return {k: attributes[k] for k in whitelist if k in attributes}

@@ -8,15 +8,21 @@ services:
       - backend
     networks:
       - internal
+    volumes:
+      - shared-data:/app/src/data
   backend:
     build:
       context: ./backend
     volumes:
       - ./backend/data:/app/data
+      - shared-data:/app/data/web
     networks:
       - internal
-    expose:
-      - "8000"
+    ports:
+      - "8000:8000"
+
+volumes:
+  shared-data:
 
 networks:
   internal:
