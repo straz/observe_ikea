@@ -1,4 +1,3 @@
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.7.1/+esm'
 import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 
 // date is {year: year, month: month, day: day}

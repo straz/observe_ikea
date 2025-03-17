@@ -1,5 +1,3 @@
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.7.1/+esm'
-
 import {sensorsUrl} from './common.js';
 
 export async function listing(divId){
@@ -23,7 +21,7 @@ export async function listing(divId){
 //  
 // data is an object: {deviceId: {name: deviceName, type: deviceType}}
 function make_home(homeName, data){
-  const list = jquery('<div>', {class: 'mt-3'});
+  const list = $('<div>', {class: 'mt-3'});
   list.append($('<h3>').html(homeName))
   for (let deviceId in data) {
     const entry = data[deviceId]
@@ -33,6 +31,6 @@ function make_home(homeName, data){
 } 
 
 function make_menu_item(deviceId, name, type){
-  const li = jquery('<li>')
-  return li.append(jquery('<a>', {'href': `graph?type=${type}&deviceId=${deviceId}`, html: name}))
+  const li = $('<li>')
+  return li.append($('<a>', {'href': `graph?type=${type}&deviceId=${deviceId}`, html: name}))
 }

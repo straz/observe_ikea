@@ -1,4 +1,3 @@
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.7.1/+esm'
 import { showChart } from './show_data.js';
 import { sensorsUrl, dataUrl } from './common.js';
 

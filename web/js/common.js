@@ -1,5 +1,3 @@
-// http://192.168.86.37:8000
-
 export const DATA_COOKIE = 'data_host';
 
 export function sensorsUrl(){
