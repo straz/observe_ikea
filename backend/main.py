@@ -3,6 +3,7 @@
 from pathlib import Path
 import os
 
+import ssl
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
@@ -14,6 +15,9 @@ DIR = Path(__file__).parent
 
 
 app = FastAPI()
+
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+ssl_context.load_cert_chain('./certs/cert.pem', keyfile='./certs/key.pem')
 
 app.add_middleware(
     CORSMiddleware,

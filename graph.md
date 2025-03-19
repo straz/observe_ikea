@@ -2,7 +2,7 @@
 layout: default
 ---
 
-[Home](/)
+[Home](.)
 
 <div class="mb-1 mt-3" id="today"></div>
 <div class="mb-5" id="buttons"></div>

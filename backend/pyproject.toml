@@ -4,11 +4,12 @@ version = "0.1.0"
 requires-python = ">=3.12"
 description = "Gathers sensor data from an IKEA DIRIGERA hub"
 dependencies = [
+  "cryptography",
   "dirigera",
   "fastapi",
   "pydantic",
   "types-requests",
-  "uvicorn"
+  "uvicorn",
 ]
 
 [tool.uv]
