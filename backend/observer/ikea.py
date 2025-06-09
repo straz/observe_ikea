@@ -3,6 +3,7 @@ ATTRIBUTES = {
     "environmentSensor": ["currentTemperature", "currentRH", "currentPM25", "vocIndex"],
     "motionSensor": ["isOn", "isDetected", "batteryPercentage"],
     "lightSensor": ["illuminance"],
+    "waterSensor": ["batteryPercentage", "waterLeakDetected"],
 }
 
 # Don't log these devices
